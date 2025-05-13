@@ -48,6 +48,8 @@ const createUserValid = (req, res, next) => {
 };
 
 const updateUserValid = (req, res, next) => {
+  const body = req.body;
+
   if (body.email && !isValidEmail(body.email)) {
     return res
       .status(400)

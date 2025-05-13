@@ -1,8 +1,20 @@
 import { FIGHTER } from "../models/fighter.js";
 
+const allowedKeys = Object.keys(FIGHTER).filter((key) => key !== "id");
 const createFighterValid = (req, res, next) => {
   const body = req.body;
   const { power, defense, health } = body;
+
+  const receivedKeys = Object.keys(body);
+
+  for (const key of allowedKeys) {
+    if (key !== "health" && !receivedKeys.includes(key)) {
+      return res.status(400).json({
+        error: true,
+        message: `Missing required field: ${key}`,
+      });
+    }
+  }
 
   if (typeof power !== "number" || power < 1 || power > 100) {
     return res
@@ -24,6 +36,7 @@ const createFighterValid = (req, res, next) => {
       .status(400)
       .json({ error: true, message: "Health must be a number from 80 to 120" });
   }
+
   next();
 };
 

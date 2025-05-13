@@ -4,6 +4,7 @@ const responseMiddleware = (req, res, next) => {
   }
 
   const result = res.locals.data;
+  console.log(result);
 
   const error = res.err;
 
